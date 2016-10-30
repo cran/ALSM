@@ -5,7 +5,7 @@ Calculate AIC
 }
 \description{Akaike's information criterion
 
-\deqn{AIC = n*ln(SSEp)-n*log(n)+2*p)}
+\deqn{AIC = n*ln(SSEp)-n*ln(n)+2*p}
 
 }
 \usage{

@@ -15,6 +15,6 @@ bftest<-function(fit,group,alpha=.05){
   s=sqrt( (  (n1-1)*var(d1)+   (n2-1)*var(d2)   )/(n-2))
   t=(mean(d1)-mean(d2))/(s*sqrt((1/n1)+(1/n2))   )
 
-  out<-cbind(t.value=t,P.Value=(1-pt(1-(alpha/2),n-2)),alpha=alpha,df=(n-2))###????
+  out<-cbind(t.value=abs(t),P.Value=2*(1-pt(abs(t),n-2)),alpha=alpha,df=(n-2))###????
   return(out)
 }

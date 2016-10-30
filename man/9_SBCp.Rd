@@ -5,7 +5,7 @@ Calculate SBC
 }
 \description{Schwarz' Bayesian criterion
 
-\deqn{SBC = n*ln(SSEp)-n*ln(n)+ln(n)*p)}
+\deqn{SBC = n*ln(SSEp)-n*ln(n)+ln(n)*p}
 
 }
 \usage{

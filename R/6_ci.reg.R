@@ -1,6 +1,6 @@
 #' @export
-#' @importFrom graphics lines par plot
-#' @importFrom stats anova deviance df.residual lm median predict pt qf qt var
+#' @importFrom graphics lines par plot  abline arrows axis barplot boxplot hist text title
+#' @importFrom stats anova deviance df.residual lm median predict pt qf qt var pf ptukey qnorm qqline qqnorm qtukey rstudent sd
 #' @importFrom leaps leaps
 
 

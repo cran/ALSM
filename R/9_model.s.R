@@ -1,5 +1,5 @@
 #' @export
-
+#' @import leaps
 
 
 model.s<-function(x,y){
