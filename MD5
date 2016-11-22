@@ -1,9 +1,10 @@
-5d4b0bf1fbaa58d636a69b81fcefc6e8 *DESCRIPTION
-2ae4e75df8d165cf7666d51a71015cba *NAMESPACE
-27efb90df238a99a6e59eafac2e51283 *R/16_17_18_oneway.R
+6ced4d3d4d2a9c438ae434c0f61ffe75 *DESCRIPTION
+1bffcef62e5248800e28b9563d294a2e *NAMESPACE
+f8a7d2990e0e80b3a78243d11d4340d4 *R/16_17_18_oneway.R
+fe3a8f741a50dda7434e3bdb0b3b173d *R/17_ss.towway.R
 5fa963729dc337f07bc901979be82e84 *R/3_bftest.R
-84cb030392e17aff2ad010fe48e84012 *R/3_boxcox.sse.R
-45a4d9740023ee70dae1609aacfe1d08 *R/6_ci.reg.R
+bcc19a6d8457365f0dad3a2af822635d *R/3_boxcox.sse.R
+ab3093a63c7a4a55712806be1b791119 *R/6_ci.reg.R
 6e8bbd05d10fcc839dec3fc8b7ca354d *R/9_AICp.R
 3b24934a63f200aacc99f9cd52c25c70 *R/9_BestSub.R
 0ce5b17e80948f4d26643bf25f48e371 *R/9_SBCp.R
@@ -31,6 +32,7 @@ a35be245139039e6d778a7ea4d81a711 *data/ServoData.rda
 90fff02c6f524e1cb871fa54a2ee921d *data/SurgicalUnitAdditional.rda
 97b6003e7501e7bcf2dd45a0c3eadadc *data/TolucaCompany.rda
 52ad68aebf4b25970115aae006fb6fb6 *data/WindingSpeeds.rda
+b2e5775a64e37701ad20346e51870217 *man/17_ssea.oneway.Rd
 ac963f31d74c63131da4241728a06de8 *man/3_bftest.Rd
 d90d20c4ab75997fb3b7ff039830d7c4 *man/6_ci.reg.Rd
 73cd39d386a151bf552aef6af69608a9 *man/9_AICp.Rd
@@ -61,4 +63,4 @@ f9a0551ccc352ec353c65e182d19f32a *man/SurgicalUnit.Rd
 c85b1bc1d4de45b55160355d6ad54c5b *man/SurgicalUnitAdditional.Rd
 75b10768eb221f273aa76893d4735b4b *man/TolucaCompany.Rd
 d43a4ed821e41d9d0966a6fdc9d0a9aa *man/WindingSpeeds.Rd
-1d8e1207c993139ea34e53d9d8e398a4 *man/oneway.Rd
+af8f5a59ed352ab78efae3a7bf692d06 *man/oneway.Rd

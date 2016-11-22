@@ -243,7 +243,7 @@ out.des<-  cbind(Group=rvo,n=n,mean=tapply(y,x,mean),median=tapply(y,x,median),V
     }
 
 
-    colnames(out.b)<- c('L', 'lower', 'upper','F','p-value')
+    colnames(out.b)<- c('L', 'lower', 'upper','t','p-value')
     out.b<-out.b[-1,]
 
 
@@ -302,20 +302,25 @@ out.des<-  cbind(Group=rvo,n=n,mean=tapply(y,x,mean),median=tapply(y,x,median),V
     out.ot<-'do not exist outlier'
   }
 ####### ANOM
-out.an<-matrix(1:3,1,3)
+
 mmm<-mean(means)
-tt<-pt(1-alpha/(2*r),nt-r)
-
+tt<-qt(1-alpha/(2*r),nt-r)
+s=c()
 for ( i in 1:r){
+    s<-c(s,sqrt((mse/n[i]) * ((r-1)/r)^2 + (mse/r^2) * sum(1/n[-i])))
+}
 
-    s2<-((mse*(    ((r-1)/r)^2   ))/(n[i]) )+(mse/(r^2)  )*(sum(n[(1:r)!=i]))
-    out<-cbind(rvo[i],mmm-tt*sqrt(s2) , mmm+tt*sqrt(s2))
-    out.an<-rbind(out.an,out)
-
-
-  }
+out.an<-cbind(rvo,means-mmm-tt*s , means-mmm+tt*s)
+out.an2<-cbind(rvo,mmm-tt*s , mmm+tt*s)
 colnames(out.an)<- c('factor level', 'lower', 'upper')
-out.an<-out.an[-1,]
+
+dd<-diff(range(means))/4
+plot(x = seq(r), means, pch = 20, xlim=c(.5,r+.5),ylim = c(min(out.an2[,2],means,mmm), max(out.an2[,3],means,mmm)), xlab = "Levels of Design", ylab = "Mean", xaxt = 'n')
+axis(1, seq(r),labels = rvo)
+segments(seq(r), mmm, seq(r), means)
+lines(seq(1, r+.5, 0.5), rep(out.an2[,3], each = 2), type = "S")
+lines(seq(1, r+.5, 0.5), rep(out.an2[,2], each = 2), type = "S")
+abline(h = mmm)
 
   ############
   if ( !is.null(mc) ){

@@ -17,6 +17,8 @@ Contrast of Factor level Means
 
 test and confidence interval for linear Combination of Factor level Means
 
+Analysis of Means (CI for treatment effects)
+
 \strong{*** Tests for Constancy of Error Variance: ***}
 
 Hartley Test
@@ -87,7 +89,7 @@ oneway(y, group, alpha=0.05,MSE=NULL, c.value=0, mc=NULL, residual)
   \item{group}{vector INTEGER, group variable
 %%     ~~Describe \code{group} here~~
 }
-  \item{alpha}{Confidence interval calculate with 1-\eqn{\alpha} percent
+  \item{alpha}{Confidence interval calculate with 1-alpha percent
 
 %%     ~~Describe \code{alpha} here~~
 }

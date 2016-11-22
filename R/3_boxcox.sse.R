@@ -16,9 +16,9 @@ w=k2*log(y)
 s0<-c(deviance(lm(w~x)))
 s<-c(s,s0)
 l<-c(l,0)
-out<-data.frame(labmda=l,SSE=s)
+out<-data.frame(lambda=l,SSE=s)
 out<-out[order(l),]
-plot(out,ylab = 'SSE',xlab='labdma',type='l')
+plot(out,ylab = 'SSE',xlab=expression(lambda),type='l')
 
 return(out)
 }
