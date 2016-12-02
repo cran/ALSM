@@ -1,10 +1,10 @@
-6ced4d3d4d2a9c438ae434c0f61ffe75 *DESCRIPTION
-1bffcef62e5248800e28b9563d294a2e *NAMESPACE
-f8a7d2990e0e80b3a78243d11d4340d4 *R/16_17_18_oneway.R
+4623a49f3b119a6561051181a3d0b593 *DESCRIPTION
+0b93838d194f81eb7853a54180d063c4 *NAMESPACE
+f07ef56a49814c3f567aea2e12022460 *R/16_17_18_oneway.R
 fe3a8f741a50dda7434e3bdb0b3b173d *R/17_ss.towway.R
 5fa963729dc337f07bc901979be82e84 *R/3_bftest.R
 bcc19a6d8457365f0dad3a2af822635d *R/3_boxcox.sse.R
-ab3093a63c7a4a55712806be1b791119 *R/6_ci.reg.R
+2c145b6241eb194e65c3bbd7e58d5371 *R/6_ci.reg.R
 6e8bbd05d10fcc839dec3fc8b7ca354d *R/9_AICp.R
 3b24934a63f200aacc99f9cd52c25c70 *R/9_BestSub.R
 0ce5b17e80948f4d26643bf25f48e371 *R/9_SBCp.R
@@ -63,4 +63,4 @@ f9a0551ccc352ec353c65e182d19f32a *man/SurgicalUnit.Rd
 c85b1bc1d4de45b55160355d6ad54c5b *man/SurgicalUnitAdditional.Rd
 75b10768eb221f273aa76893d4735b4b *man/TolucaCompany.Rd
 d43a4ed821e41d9d0966a6fdc9d0a9aa *man/WindingSpeeds.Rd
-af8f5a59ed352ab78efae3a7bf692d06 *man/oneway.Rd
+a9428fc74421acc2c1b179b9cfc0d10c *man/oneway.Rd

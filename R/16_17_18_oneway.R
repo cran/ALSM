@@ -5,13 +5,10 @@
 #'
 
 
-oneway <- function(y,group,alpha=0.05,MSE=NULL,c.value=0,mc=NULL,residual=c('simple','semistudentized','studentized','studentized.deleted')){
+oneway <- function(y,group,alpha=0.05,MSE=NULL,c.value=0,mc=NULL,residual=c('simple','semistudentized','studentized','studentized.deleted'),omission.variable=NULL){
 
 
-  #x<-c(40,40,40,20,20,20,30,30,30,10) ### DELE
-  #y<-1:10 #### dellllllllllllllll
-  #alpha<-0.05
-#c.value=0
+
   x<-group
   means<-tapply(y,x,mean)
   r<-length(table(x))
@@ -84,6 +81,25 @@ out.des<-  cbind(Group=rvo,n=n,mean=tapply(y,x,mean),median=tapply(y,x,median),V
     e<-del
     tt<-'studentized deleted residuals'
   }
+  ########### omisssion variable
+  if ( !is.null(omission.variable) ){
+    o1<-omission.variable==unique(omission.variable)[1]
+    o2<-omission.variable==unique(omission.variable)[2]
+
+    plot(e[o1]~fit$fitted.values[o1],xlim=range(fit$fitted.values),ylim=range(e),xlab='Yhat',ylab=tt,main=paste0(tt,' Plot against Fitted Values categorize Omission Variable'))
+    points(fit$fitted.values[o2],e[o2],pch=20)
+
+    plot(e[o1],x[o1],yaxt='n',frame.plot=F  ,xlim=range(e),ylim=c(0,r),ylab='Group',xlab=tt)
+
+    abline(h = 1:r, lty = 2, col = "gray40", lwd = 1)
+    axis(2,1:r,labels=rvo)
+    points(e[o2],x[o2],pch=20)
+    title(paste0('Aligned ',tt, ' Dot Plot categorize Omission Variable '))
+  }
+  ######################## seq
+  plot(e, type = "b", lty = 2, xlab = "Run", ylab = tt,pch=16)
+  title("Sequence Plot")
+
 
   ############################ plot
   qqnorm(e,main = paste0('Normal Q-Q Plot ',tt ))
@@ -150,6 +166,7 @@ out.des<-  cbind(Group=rvo,n=n,mean=tapply(y,x,mean),median=tapply(y,x,median),V
   tt<-paste0('Interval Plot  ',  1-a ,'  percent confidence limits for each factor level')
   title(tt)
 
+
   ############# lsd  lsd
 
   d<-means[ci]-means[cj]
@@ -188,18 +205,19 @@ out.des<-  cbind(Group=rvo,n=n,mean=tapply(y,x,mean),median=tapply(y,x,median),V
   ###############Tukey
 
 
-  d<-means[ci]-means[cj]
-  s<-sqrt( mse*(1/(n[ci])  +1/(n[cj]))  )
-  t<-qtukey(1-a,r,nt-r)/sqrt(2)
+ # d<-means[ci]-means[cj]
+  #s<-sqrt( mse*(1/(n[ci])  +1/(n[cj]))  )
+  #t<-qtukey(1-a,r,nt-r)/sqrt(2)
 
-  q<-(sqrt(2)*d)/s
-  pv<-2*(1-ptukey(abs(q),r,nt-r)) #########   p-v chek shavad
+  #q<-(sqrt(2)*d)/s
+  #pv<-2*(1-ptukey(abs(q),r,nt-r)) #########   p-v chek shavad
 
-  out.tky<- cbind(d,d-t*s,d+t*s,q,pv)
-  colnames(out.tky)<- c('diffrence', 'lower', 'upper','q*','p-value')
-  rownames(out.tky)<- rn
+  #out.tky<- cbind(d,d-t*s,d+t*s,q,round(pv,4))
+  #colnames(out.tky)<- c('diffrence', 'lower', 'upper','q*','p-value')
+  #rownames(out.tky)<- rn
 
-  #out.tky<-TukeyHSD(aov(y~x),alpha=)
+  out.tky<-TukeyHSD(aov(y~factor(x)),conf.level=1-a)
+plot(out.tky<-TukeyHSD(aov(y~factor(x)),conf.level=1-a))
 
   #################################### shefffe  c.value =0 hamishee ,p.v  TEST
 
@@ -293,13 +311,13 @@ out.des<-  cbind(Group=rvo,n=n,mean=tapply(y,x,mean),median=tapply(y,x,median),V
   colnames(out.np)<- c('difference', 'lower', 'upper')
   row.names(out.np)<-rn
   ########### outlier
-
-  case<-c(1:nt)[abs(rstudent(fit))>qt(1-a/(2*nt),nt-r-1)]
+  t.outli<-qt(1-a/(2*nt),nt-r-1)
+  case<-c(1:nt)[abs(rstudent(fit))>t.outli]
   g<-y[case]
   if ( length(case!=0)){
-    out.ot<-cbind(case=case,y=g)
+    out.ot<-cbind(case=case,y=g,studentized.deleted.residual=rstudent(fit)[case],t.value=rep(t.outli,length(case) ))
   }else{
-    out.ot<-'do not exist outlier'
+    out.ot<-paste0('t value=',t.outli,' ,do not exist outlier')
   }
 ####### ANOM
 
@@ -322,11 +340,12 @@ lines(seq(1, r+.5, 0.5), rep(out.an2[,3], each = 2), type = "S")
 lines(seq(1, r+.5, 0.5), rep(out.an2[,2], each = 2), type = "S")
 abline(h = mmm)
 
-  ############
+
+############
   if ( !is.null(mc) ){
-    o<-list(descriptive=out.des,fit=summary(fit),anova=anova(fit),  Single.factor.level=out.sf,Contrast.NOT.simultaneous=out.c1 ,LSD=out.lsd,Tuckey=out.tky,Scheffe=out.sh ,Bonferroni=out.b ,Nonparametric.Rank.F.Test=out.n,Nonparametric.Rank.F.Test.Pairwise=out.np ,Hartley.Test=out.ht,Brown.Forsythe.test=out.bf,Bonfferoni.Test.Outlier=out.ot,ANOM.Bonferroni=out.an,residuals=res ,semistudentized.residuals=sem ,studentized.residuals=stu ,studentized.deleted.residuals= del)
+    o<-list(descriptive=out.des,fit=summary(fit),anova=anova(fit),  Single.factor.level=out.sf,Contrast.NOT.simultaneous=out.c1 ,LSD=out.lsd,Tukey=out.tky,Scheffe=out.sh ,Bonferroni=out.b ,Nonparametric.Rank.F.Test=out.n,Nonparametric.Rank.F.Test.Pairwise=out.np ,Hartley.Test=out.ht,Brown.Forsythe.test=out.bf,Bonfferoni.Test.Outlier=out.ot,ANOM.Bonferroni=out.an,residuals=res ,semistudentized.residuals=sem ,studentized.residuals=stu ,studentized.deleted.residuals= del)
   }else{
-    o<-list( descriptive=out.des,fit=summary(fit),anova=anova(fit),  Single.factor.level=out.sf,LSD=out.lsd,Tuckey=out.tky,Nonparametric.Rank.F.Test=out.n,Nonparametric.Rank.F.Test.Pairwise=out.np ,Hartley.Test=out.ht,Brown.Forsythe.test=out.bf,Bonfferoni.Test.Outlier=out.ot,ANOM.Bonferroni=out.an,residuals=res ,semistudentized.residuals=sem ,studentized.residuals=stu ,studentized.deleted.residuals= del)
+    o<-list( descriptive=out.des,fit=summary(fit),anova=anova(fit),  Single.factor.level=out.sf,LSD=out.lsd,Tukey=out.tky,Nonparametric.Rank.F.Test=out.n,Nonparametric.Rank.F.Test.Pairwise=out.np ,Hartley.Test=out.ht,Brown.Forsythe.test=out.bf,Bonfferoni.Test.Outlier=out.ot,ANOM.Bonferroni=out.an,residuals=res ,semistudentized.residuals=sem ,studentized.residuals=stu ,studentized.deleted.residuals= del)
   }
   return(o)
 }

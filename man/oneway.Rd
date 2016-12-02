@@ -79,7 +79,7 @@ boxplot
 
 }
 \usage{
-oneway(y, group, alpha=0.05,MSE=NULL, c.value=0, mc=NULL, residual)
+oneway(y, group, alpha=0.05,MSE=NULL, c.value=0, mc=NULL, residual,omission.variable=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -104,6 +104,9 @@ oneway(y, group, alpha=0.05,MSE=NULL, c.value=0, mc=NULL, residual)
 }
   \item{residual}{Type of residuals.  simple (default), semistudentized,  studentized  or  studentized.deleted
 %%     ~~Describe \code{residual} here~~
+}
+\item{omission.variable}{numeric vector. Omission of Important Explanatory Variables. Residual analysis may also be used to study whether or not the single-factor ANOVA model is an adequate model.
+%%     ~~Describe \code{mc} here~~
 }
 }
 
