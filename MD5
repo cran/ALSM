@@ -1,7 +1,9 @@
-4623a49f3b119a6561051181a3d0b593 *DESCRIPTION
-0b93838d194f81eb7853a54180d063c4 *NAMESPACE
+85c82b08d563acfb1e15a33c5e897fd0 *DESCRIPTION
+560fd05d84aa4b35299e306e64a2b226 *NAMESPACE
 f07ef56a49814c3f567aea2e12022460 *R/16_17_18_oneway.R
 fe3a8f741a50dda7434e3bdb0b3b173d *R/17_ss.towway.R
+542b5298862e4d10429be25cb089d5c7 *R/19_aligned.dot.plot.R
+f10251bdff440ec1381f9f1678b944ab *R/19_towway.ci.R
 5fa963729dc337f07bc901979be82e84 *R/3_bftest.R
 bcc19a6d8457365f0dad3a2af822635d *R/3_boxcox.sse.R
 2c145b6241eb194e65c3bbd7e58d5371 *R/6_ci.reg.R
@@ -15,7 +17,9 @@ eb29b8e9f144a675bc8265ce8cc17d9b *R/9_model.s.R
 2dcb511fcef8645b6a99f6cc5402bfec *R/9_pressc.R
 1c9ea551ebd316ec503b07bc32f7b2c1 *data/ABTElectronicsCorporation.rda
 6eac70a523e950282191b11ad8eeb639 *data/BodyFat.rda
-9b2740c24e85b955bda5f712d5cd00f6 *data/CashOffers.rda
+6c87d5589b9c59e86903419c55cc0124 *data/CashOffers.rda
+3860679bb040e547c139e960a882ffb4 *data/CastleBakery.rda
+3b98ad087b8b70f408a38d4a854622da *data/CoinOperatedTenninals.rda
 5e9df688aa386efea04c84f7a6dfa453 *data/FillingMachines.rda
 db21f80452815a0622ba65eb28fac5d7 *data/GroceryRetailer.rda
 bb8c12f3dc19ed4e08238ecdbefd1bdd *data/HayFeverRelief.rda
@@ -46,7 +50,9 @@ bfdef2031f3a9989e36d9a84b42a1f2b *man/9_modelval.Rd
 063c42b62995a1278704204c1ca95ed8 *man/9_pressc.Rd
 1aa9a4833e2dd79cf294889e44e41db4 *man/ABTElectronicsCorporation.Rd
 0e1e58c51ca9783f2c80612fd8fb3361 *man/BodyFat.Rd
-8dbf869d2bd739c261f933092488f38c *man/CashOffers.Rd
+30a6e34c5a8acd246d1ba7b3ed3ba9b7 *man/CashOffers.Rd
+145bc3696a5368e75de72d914b53912b *man/CastleBakery.Rd
+415d8a27f4d2f60b10f5386d0976af9b *man/CoinOperatedTenninals.Rd
 6cc86a0140735af0a3845c9f8857a0d8 *man/FillingMachines.Rd
 daa3a2d2dff76e07b69501ff23d5778e *man/GroceryRetailer.Rd
 e3fbe3cf9f0d0484dcae48016562d102 *man/HayFeverRelief.Rd
@@ -63,4 +69,6 @@ f9a0551ccc352ec353c65e182d19f32a *man/SurgicalUnit.Rd
 c85b1bc1d4de45b55160355d6ad54c5b *man/SurgicalUnitAdditional.Rd
 75b10768eb221f273aa76893d4735b4b *man/TolucaCompany.Rd
 d43a4ed821e41d9d0966a6fdc9d0a9aa *man/WindingSpeeds.Rd
+7fe82acaa4fc138bd85b661bbe76c4b8 *man/aligned.dot.plot2.Rd
 a9428fc74421acc2c1b179b9cfc0d10c *man/oneway.Rd
+15637888b222680c2c9098f72d07c005 *man/towway.ci.Rd
