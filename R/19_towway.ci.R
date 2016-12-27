@@ -25,14 +25,6 @@ towway.ci<-function(y,x1,x2,mc=NULL,mp=NULL,mt=NULL,mse=NULL,interact=T,alpha=0.
   out.i.s.s<-NULL
   out.i.s.b<-NULL
 
-  #simultaneous<-match.arg(simultaneous)
- # interact<-match.arg(interact)
-
-
-  fit <- lm(y ~ factor(x1)*factor(x2))######!!!!!
-  if (   is.null(mse)    ){
-    mse<-(deviance(fit))/(fit$df.residual)
-  }
 
   a<-length(table(x1))
   b<-length(table(x2))
@@ -45,6 +37,20 @@ towway.ci<-function(y,x1,x2,mc=NULL,mp=NULL,mt=NULL,mse=NULL,interact=T,alpha=0.
   rv.b<-as.integer(names(mean.b))
 
   n<-sum(x1==rv.a[1] & x2==rv.b[1]   )
+
+  if (n==1){
+    fit <- lm(y ~ factor(x1)+factor(x2))######!!!!!
+    df.er=(a-1)*(b-1)
+  }else{
+    fit <- lm(y ~ factor(x1)*factor(x2))######!!!!!
+    df.er=(n-1)*a*b
+  }
+
+  if (   is.null(mse)    ){
+    mse<-(deviance(fit))/(fit$df.residual)
+  }
+
+
 
   ci.a<-c()
   cj.a<-c()
@@ -79,23 +85,23 @@ if (interact==F){################################## intreact ==F
   row.a<-as.integer(names(mean.a))
   row.b<-as.integer(names(mean.b))
 
-  out.f.a<-cbind(level=row.a,lower=mean.a-qt(1-alpha/2,(n-1)*a*b)*s.a,upper=mean.a+qt(1-alpha/2,(n-1)*a*b)*s.a)
-  out.f.b<-cbind(level=row.b,lower=mean.b-qt(1-alpha/2,(n-1)*a*b)*s.b,upper=mean.b+qt(1-alpha/2,(n-1)*a*b)*s.b)
+  out.f.a<-cbind(level=row.a,lower=mean.a-qt(1-alpha/2,df.er)*s.a,upper=mean.a+qt(1-alpha/2,df.er)*s.a)
+  out.f.b<-cbind(level=row.b,lower=mean.b-qt(1-alpha/2,df.er)*s.b,upper=mean.b+qt(1-alpha/2,df.er)*s.b)
   ############################ tukey a
   d<-mean.a[ci.a]-mean.a[cj.a]
-  t<-(qtukey(1-alpha,a,(n-1)*a*b))/sqrt(2)
+  t<-(qtukey(1-alpha,a,df.er))/sqrt(2)
   s<-sqrt(  (2*mse)/(b*n)   )
   q<-(sqrt(2)*d)/s
-  #pv<-round(2*(1-ptukey(abs(q),a,(n-1)*a*b)),5)
+  #pv<-round(2*(1-ptukey(abs(q),a,df.er)),5)
   out.t.a<-cbind(d,lower=d-t*s,upper=d+t*s,q)
   row.names(out.t.a)<-rn.a
 
   ############################ tukey b
   d<-mean.b[ci.b]-mean.b[cj.b]
-  t<-(qtukey(1-alpha,b,(n-1)*a*b))/sqrt(2)
+  t<-(qtukey(1-alpha,b,df.er))/sqrt(2)
   s<-sqrt(  (2*mse)/(a*n)   )
   q<-(sqrt(2)*d)/s
-  #pv<-round(2*(1-ptukey(abs(q),b,(n-1)*a*b)),5)
+  #pv<-round(2*(1-ptukey(abs(q),b,df.er)),5)
   out.t.b<-cbind(d,lower=d-t*s,upper=d+t*s,q)
   row.names(out.t.b)<-rn.b
   ################################ BON tow a
@@ -103,20 +109,20 @@ if (interact==F){################################## intreact ==F
   g<-choose(a,2) ###!!!!!!!!!
 
   d<-mean.a[ci.a]-mean.a[cj.a]
-  t<-qt(1-alpha/(2*g),(n-1)*a*b)
+  t<-qt(1-alpha/(2*g),df.er)
   s<-sqrt(  (2*mse)/(b*n)   )
   q<-(d)/s
-  pv<-round(2*(1-pt(abs(q) ,(n-1)*a*b )),5)
+  pv<-round(2*(1-pt(abs(q) ,df.er )),5)
   out.bt.a<-cbind(d,lower=d-t*s,upper=d+t*s,q,pv)
   row.names(out.bt.a)<-rn.a
   ################################ BON tow b
   g<-choose(b,2) ###!!!!!!!!!
 
   d<-mean.b[ci.b]-mean.b[cj.b]
-  t<-qt(1-(alpha/(2*g)),(n-1)*a*b)
+  t<-qt(1-(alpha/(2*g)),df.er)
   s<-sqrt(  (2*mse)/(a*n)   )
   q<-(d)/s
-  pv<-round(2*(1-pt(abs(q) ,(n-1)*a*b ) ),5)
+  pv<-round(2*(1-pt(abs(q) ,df.er ) ),5)
   out.bt.b<-cbind(d,lower=d-t*s,upper=d+t*s,q,pv)
   row.names(out.bt.b)<-rn.b
 
@@ -130,7 +136,7 @@ if (interact==F){################################## intreact ==F
       for(i in 1:g){
       qq<-c(qq, mean( y[x1==mt[i,1] & x2==mt[i,2] ]    )  )
       }
-      se<-qt(1-alpha/(2*g),(n-1)*a*b)
+      se<-qt(1-alpha/(2*g),df.er)
 
       out.tr.sim.b<-cbind(mean=qq,lower=qq-se*sqrt(mse/n) ,upper=qq+se*sqrt(mse/n) )
       row.names(out.tr.sim.b)<-paste0(mt[,1],' & ',mt[,2])
@@ -161,9 +167,9 @@ if (interact==F){################################## intreact ==F
     for( i in 1:c(z/3)){
       l<-sum(mc[i*2,]*(m[[qqr[i]]][mc[i*2-1,]]))
       s.a<-sqrt(   (mse/(ab[qqn[i]]*n))*(sum(mc[i*2,]^2))       )
-      s<-sqrt(  (ab[qqr[i]]-1)*(qf(1-alpha,ab[qqr[i]]-1,(n-1)*a*b)) )
+      s<-sqrt(  (ab[qqr[i]]-1)*(qf(1-alpha,ab[qqr[i]]-1,df.er)) )
       q<-(l^2)/((ab[qqr[i]]-1)*(s.a^2))
-      pv<-round(1-pf(q,ab[qqr[i]]-1,(n-1)*a*b),5)
+      pv<-round(1-pf(q,ab[qqr[i]]-1,df.er),5)
       out<-cbind(num=i,lower=l-s*s.a,upper=l+s*s.a,q,pv)
       out.s.a<-rbind(out.s.a,out)
     }
@@ -175,9 +181,9 @@ if (interact==F){################################## intreact ==F
     for( i in 1:c(z/3)){
       l<-sum(mc[i*2,]*(m[[qqr[i]]][mc[i*2-1,]]))
       s.a<-sqrt(   (mse/(ab[qqn[i]]*n))*(sum(mc[i*2,]^2))       )
-      s<-qt(1-alpha/(2*g),(n-1)*a*b)
+      s<-qt(1-alpha/(2*g),df.er)
       q<-l/s.a
-      pv<-round(2*(1-pt(q,(n-1)*a*b)),5)
+      pv<-round(2*(1-pt(q,df.er)),5)
       out<-cbind(num=i,L=l,lower=l-s*s.a,upper=l+s*s.a)
       out.sb.a<-rbind(out.sb.a,out)
     }
@@ -189,7 +195,7 @@ if (interact==F){################################## intreact ==F
     for( i in 1:c(z/3)){
       l<-sum(mc[i*2,]*(m[[qqr[i]]][mc[i*2-1,]]))
       s.ab<-sqrt(   (mse/(ab[qqn[i]]*n))*(sum(mc[i*2,]^2))       )
-      out<-cbind(num=i,L=l,lower=l-qt(1-alpha/2,(n-1)*a*b)*s.ab,upper=l+qt(1-alpha/2,(n-1)*a*b)*s.ab)
+      out<-cbind(num=i,L=l,lower=l-qt(1-alpha/2,df.er)*s.ab,upper=l+qt(1-alpha/2,df.er)*s.ab)
       out.c.a<-rbind(out.c.a,out)
     }
     out.c.a<-out.c.a[-1,]
@@ -215,17 +221,17 @@ if (interact==F){################################## intreact ==F
     }
 
     s<-sqrt((mse*2)/n)
-    t<-(qtukey(1-alpha,a*b,(n-1)*a*b))/sqrt(2)
+    t<-(qtukey(1-alpha,a*b,df.er))/sqrt(2)
     q<-(sqrt(2)*d)/s
-    pv<-round(2*(1-ptukey(abs(q),a*b,(n-1)*a*b)),5)
-    out.i.t<-cbind(d,d-t*s,d+t*s,q,pv)
+    #pv<-round(2*(1-ptukey(abs(q),a*b,df.er)),5)
+    out.i.t<-cbind(difference=d,lower=d-t*s,upper=d+t*s,q)
     row.names(out.i.t)<-rn
     ##################### INTER bon
     g<-dim(mp)[1]
-    t<-qt(1-alpha/(2*g),(n-1)*a*b)
+    t<-qt(1-alpha/(2*g),df.er)
     q<-(d)/s
-    pv<-round(2*(1-pt( abs(q) ,(n-1)*a*b )),5)
-    out.i.b<-cbind(d,d-t*s,d+t*s,q,pv)
+    #pv<-round(2*(1-pt( abs(q) ,df.er )),5)
+    out.i.b<-cbind(difference=d,lower=d-t*s,upper=d+t*s,q)
 
     row.names(out.i.b)<-rn
 } ##### end if!is.null(mp)
@@ -244,19 +250,19 @@ if (interact==F){################################## intreact ==F
   ll<-c(ll,l)
   se<-c(se,sqrt( (mse/n)*sum(mc[  i*3 , ]^2)   ))
   }
-    S<-sqrt( (a*b-1)*qf(1-alpha,a*b-1,(n-1)*a*b)  )
+    S<-sqrt( (a*b-1)*qf(1-alpha,a*b-1,df.er)  )
 
   out.i.s.s<-cbind(L=ll,lower=ll-S*se,uper=ll+S*se)
 
   ###########################not simul
-  S<-qt(1-alpha/2,(n-1)*a*b)
+  S<-qt(1-alpha/2,df.er)
 
   out.i.c<-cbind(L=ll,lower=ll-S*se,uper=ll+S*se)
 
   ######################################## bon
   g<-dim(mc)[1]/3
-  S<-qt(1-alpha/(2*g),(n-1)*a*b )
-  #S<-sqrt( (a*b-1)*qf(1-alpha,a*b-1,(n-1)*a*b)  )
+  S<-qt(1-alpha/(2*g),df.er )
+  #S<-sqrt( (a*b-1)*qf(1-alpha,a*b-1,df.er)  )
   #se<-sqrt( (mse/n)*(apply(mc[(1:(dim(mc)[1]/3))*3,],1,function(xx)sum(xx^2)))  )
   out.i.s.b<-cbind(L=ll,lower=ll-S*se,upper=ll+S*se)
 
