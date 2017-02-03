@@ -27,7 +27,7 @@ Multiple Contrasts of Treatment Means(Scheffe and Bonferroni Procedure.)
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-towway.ci(y, x1, x2, mc = NULL, mp = NULL,mt=NULL, mse = NULL, interact = T, alpha = 0.05)
+towway.ci(y, x1, x2, mc = NULL, mp = NULL,mt=NULL, mse= NULL,alpha = 0.05)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -53,11 +53,6 @@ towway.ci(y, x1, x2, mc = NULL, mp = NULL,mt=NULL, mse = NULL, interact = T, alp
   \item{mse}{MSE of model
 %%     ~~Describe \code{mse} here~~
 }
-
-
-  \item{interact}{if TRUE, calculate CI(s) correspond to important interaction.
-%%     ~~Describe \code{interact} here~~
-}
   \item{alpha}{Confidence intervals calculate with 1-alpha  percent
 %%     ~~Describe \code{alpha} here~~
 }
@@ -76,5 +71,5 @@ A=HayFeverRelief$A
 B=HayFeverRelief$B
 
 m=matrix(c(1,2,3,0,0,0,.5,-1,.5),byrow = TRUE,nrow = 3)
-towway.ci(y,A,B,mc=m,interact = FALSE)
+towway.ci(y,A,B,mc=m)
 }

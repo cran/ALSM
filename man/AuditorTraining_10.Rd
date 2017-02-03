@@ -14,6 +14,7 @@
     \item{\code{y}}{a numeric vector}
     \item{\code{block}}{a numeric vector}
     \item{\code{factor}}{a numeric vector}
+    \item{\code{x}}{covariate}
   }
 }
 

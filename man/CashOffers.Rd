@@ -15,6 +15,7 @@
     \item{\code{A}}{factor variable}
     \item{\code{B}}{factor variable}
     \item{\code{num}}{index corresponding to each response}
+    \item{\code{x}}{covariate}
   }
 }
 

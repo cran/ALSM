@@ -1,8 +1,8 @@
 #' @export
 #' @importFrom graphics lines par plot  abline arrows axis barplot boxplot hist text title segments points
-#' @importFrom stats anova deviance df.residual lm median predict pt qf qt var pf ptukey qnorm qqline qqnorm qtukey rstudent sd TukeyHSD aov
+#' @importFrom stats anova deviance df.residual lm median predict pt qf qt var pf ptukey qnorm qqline qqnorm qtukey rstudent sd TukeyHSD aov aggregate cor qchisq
 #' @importFrom leaps leaps
-
+#' @importFrom car Anova
 
 ci.reg<-function(model, newdata, type = c("b", "s","w","n","m","nm","gn"), alpha = 0.05,m=1){
 

@@ -15,6 +15,7 @@
     \item{\code{block}}{a numeric vector}
     \item{\code{factor}}{a numeric vector}
     \item{\code{num}}{a numeric vector}
+
   }
 }
 

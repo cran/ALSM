@@ -9,11 +9,12 @@
 }
 \usage{data("ProductivityImprovement")}
 \format{
-  A data frame with 27 observations on the following 3 variables.
+  A data frame with 27 observations on the following 4 variables.
   \describe{
     \item{\code{y}}{response variable}
     \item{\code{group}}{factor variable}
-    \item{\code{row}}{index corresponding to each response}
+    \item{\code{num}}{index corresponding to each response}
+    \item{\code{x}}{covariate}
   }
 }
 
